@@ -15,7 +15,7 @@ public class ImplementService implements ICovidAggregateService {
     private List<Result> results = new ArrayList<>();
 
     @Override
-    public void aggregateResult(Result result, ResultType type) {
+    public synchronized void aggregateResult(Result result, ResultType type) {
         /* System.out.println("Entre"); */
         for(Result rs: results){
             if(rs.getId().equals(result.getId())){
@@ -38,7 +38,7 @@ public class ImplementService implements ICovidAggregateService {
     }
 
     @Override
-    public void upsertPersonWithMultipleTests(UUID id, ResultType type) {
+    public synchronized void upsertPersonWithMultipleTests(UUID id, ResultType type) {
         // TODO Auto-generated method stub
         for(Result result: results){
             if(id.equals(result.getId())){
@@ -46,6 +46,17 @@ public class ImplementService implements ICovidAggregateService {
                 result.setResultType(type);
             }
         }
+    }
+
+    @Override
+    public List<Result> getResultForDate(String date) {
+        List<Result> newResults = new ArrayList<>();
+        for(Result result: results){
+            if(result.getTestDate().equals(date)){
+                newResults.add(result);
+            }
+        }
+        return newResults;
     }
     
 }
