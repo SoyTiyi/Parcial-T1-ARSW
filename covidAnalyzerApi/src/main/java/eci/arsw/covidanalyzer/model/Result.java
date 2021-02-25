@@ -16,6 +16,8 @@ public class Result {
     private boolean result;
     private double testSpecifity;
     private ResultType resultType;
+    private int count;
+
     // </editor-fold>
 
     public Result(UUID id, String firstName, String lastName, String gender, String email, String birthString,
@@ -35,6 +37,10 @@ public class Result {
     // <editor-fold desc="getters">
     public UUID getId() {
         return id;
+    }
+
+    public void sumCount(){
+        count++;
     }
 
     public ResultType getResultType(){

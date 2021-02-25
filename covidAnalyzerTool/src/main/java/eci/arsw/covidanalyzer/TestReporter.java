@@ -23,6 +23,8 @@ public class TestReporter {
 
     public static void report(Result result, int type) {
 
+        System.out.println(result.getFirstName());
+
         String complement = "/";
         switch (type) {
             case TRUE_POSITIVE:
@@ -45,6 +47,7 @@ public class TestReporter {
                     .body(jsonString)
                     .asString();
         } catch (JsonProcessingException | UnirestException e) {
+            /* System.out.println(e.toString()) */;
             Logger.getLogger(TestReporter.class.getName()).log(Level.SEVERE, "Unable to report covid test result", e);
         }
     }
