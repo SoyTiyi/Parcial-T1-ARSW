@@ -17,6 +17,23 @@ public class Result {
     private double testSpecifity;
     //</editor-fold>
 
+    public Result(){
+        
+    }
+
+    public Result(UUID id, String firstName, String lastName, String gender, String email, String birthString,
+            String testString, boolean result, double testSpecifity) {
+                this.id = id;
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.gender = gender;
+                this.email = email;
+                this.birthString = birthString;
+                this.testString = testString;
+                this.result = result;
+                this.testSpecifity = testSpecifity;
+    }
+
     //<editor-fold desc="getters">
     public UUID getId() {
         return id;

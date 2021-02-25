@@ -20,6 +20,10 @@ public class Result {
 
     // </editor-fold>
 
+    public Result(){
+        
+    }
+
     public Result(UUID id, String firstName, String lastName, String gender, String email, String birthString,
             String testString, boolean result, double testSpecifity, ResultType resultType) {
                 this.id = id;

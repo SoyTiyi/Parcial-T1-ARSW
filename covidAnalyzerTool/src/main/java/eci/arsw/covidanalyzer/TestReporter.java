@@ -23,8 +23,6 @@ public class TestReporter {
 
     public static void report(Result result, int type) {
 
-        System.out.println(result.getFirstName());
-
         String complement = "/";
         switch (type) {
             case TRUE_POSITIVE:
@@ -44,6 +42,7 @@ public class TestReporter {
         try {
             String jsonString = mapper.writeValueAsString(result);
             Unirest.post(SERVER_URL + complement)
+                    .header("content-type","application/json")
                     .body(jsonString)
                     .asString();
         } catch (JsonProcessingException | UnirestException e) {

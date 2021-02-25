@@ -35,7 +35,7 @@ public class CovidAggregateController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e.toString());
-            return new ResponseEntity<>(e.toString(), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN.getReasonPhrase(),HttpStatus.FORBIDDEN);
         }
     }
 

@@ -16,6 +16,7 @@ public class ImplementService implements ICovidAggregateService {
 
     @Override
     public void aggregateResult(Result result, ResultType type) {
+        /* System.out.println("Entre"); */
         for(Result rs: results){
             if(rs.getId().equals(result.getId())){
                 result.sumCount();
