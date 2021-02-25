@@ -46,7 +46,7 @@ public class ThreadCovidAnalyzer extends Thread {
         }
     }
 
-    public synchronized void pauseState(boolean run){
+    public synchronized void setRun(boolean run){
         this.run = run;
         if(run){
             this.notifyAll();

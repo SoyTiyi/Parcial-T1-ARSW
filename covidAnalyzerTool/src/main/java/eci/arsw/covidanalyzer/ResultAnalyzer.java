@@ -16,6 +16,7 @@ public class ResultAnalyzer {
     }
 
     public synchronized void addResult(Result result) {
+        /* System.out.println("Entre"); */
         if (result.isResult()) {
             if (result.getTestSpecifity() > MIN_TEST_SPECIFY) {
                 this.positivePeople.add(result);
