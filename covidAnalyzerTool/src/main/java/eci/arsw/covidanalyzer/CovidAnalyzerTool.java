@@ -23,6 +23,7 @@ public class CovidAnalyzerTool {
     private int amountOfFilesTotal;
     private AtomicInteger amountOfFilesProcessed;
     private final int NUMBER_THREADS = 5;
+    private List<ThreadCovidAnalyzer> threads = new ArrayList<>();
 
     public CovidAnalyzerTool() {
         resultAnalyzer = new ResultAnalyzer();
@@ -34,13 +35,29 @@ public class CovidAnalyzerTool {
         amountOfFilesProcessed.set(0);
         List<File> resultFiles = getResultFileList();
         amountOfFilesTotal = resultFiles.size();
-        for (File resultFile : resultFiles) {
+        int fraction;
+        for(int i=0; i<NUMBER_THREADS; i++){
+            fraction = ((amountOfFilesTotal / NUMBER_THREADS) * i);
+            if(i == NUMBER_THREADS -1 ){
+                threads.add(new ThreadCovidAnalyzer(amountOfFilesProcessed, resultFiles, testReader, resultAnalyzer, fraction, amountOfFilesTotal));
+            }
+            else{
+                threads.add(new ThreadCovidAnalyzer(amountOfFilesProcessed, resultFiles, testReader, resultAnalyzer, fraction, fraction + (amountOfFilesTotal / NUMBER_THREADS)));
+            }
+        }
+
+        for(ThreadCovidAnalyzer thread: threads){
+            thread.start();
+        }
+
+
+        /* for (File resultFile : resultFiles) {
             List<Result> results = testReader.readResultsFromFile(resultFile);
             for (Result result : results) {
                 resultAnalyzer.addResult(result);
             }
             amountOfFilesProcessed.incrementAndGet();
-        }
+        } */
     }
 
     private List<File> getResultFileList() {

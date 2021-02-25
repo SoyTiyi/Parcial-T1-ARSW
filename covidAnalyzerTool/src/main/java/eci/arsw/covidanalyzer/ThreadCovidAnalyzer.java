@@ -1,6 +1,7 @@
 package eci.arsw.covidanalyzer;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,6 +23,7 @@ public class ThreadCovidAnalyzer extends Thread {
         this.resultAnalyzer = resultAnalyzer;
         this.first = first;
         this.last = last;
+        this.run = true;
     }
 
     @Override
@@ -29,6 +31,15 @@ public class ThreadCovidAnalyzer extends Thread {
         for (int i = first; i < last; i++) {
             List<Result> results = testReader.readResultsFromFile(resultFiles.get(i));
             for (Result result : results) {
+                synchronized (this) {
+                    while (!run) {
+                        try {
+                            this.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 resultAnalyzer.addResult(result);
             }
             amountOfFilesProcessed.incrementAndGet();
